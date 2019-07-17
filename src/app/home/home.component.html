@@ -1,0 +1,14 @@
+<div class="home-wrapper">
+    <div *ngFor="let state of initState; index as idx">
+        <tooltip [id]="idx"
+            [isOpen]="state.tooltip.isOpen"
+            (onOutsideClick)="onClickOutside($event)"
+            [content]="state.tooltip.content">
+        </tooltip>
+        <button type="button"
+            (click)="toggleTooltip(idx)"
+            class="{{state.button.class}}">
+            {{ state.button.name }}
+        </button>
+    </div>
+</div>
