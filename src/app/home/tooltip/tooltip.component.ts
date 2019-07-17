@@ -7,8 +7,9 @@ import {
     EventEmitter,
     ChangeDetectionStrategy,
     OnInit,
-    OnChanges,
+    OnDestroy,
 } from '@angular/core';
+import { TooltipService } from './tooltip.service';
 
 @Component({
     selector: 'tooltip',
@@ -16,13 +17,27 @@ import {
     styleUrls: ['./tooltip.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TooltipComponent {
-    constructor(private elementRef: ElementRef) {}
-
+export class TooltipComponent implements OnInit, OnDestroy {
     top: number;
+    private tooltipPositionChangeSubscription;
+
+    constructor(private elementRef: ElementRef, private tooltipService: TooltipService) {}
 
     ngOnInit() {
-        this.top = this.elementRef.nativeElement.offsetTop - 100;
+        this.top = 200;
+        this.tooltipPositionChangeSubscription = this.tooltipService.tooltipPositionChangeObservable.subscribe(() => {
+            const componentPosition = this.elementRef.nativeElement.offsetTop;
+            const scrollPosition = window.pageYOffset;
+            if (componentPosition - scrollPosition > 100) {
+                this.top = 200;
+            } else {
+                this.top = 336;
+            }
+        });
+    }
+
+    ngOnDestroy() {
+        this.tooltipPositionChangeSubscription.unsubscribe();
     }
 
     @Input()
@@ -56,14 +71,6 @@ export class TooltipComponent {
 
     @HostListener('window:scroll', ['$event'])
     checkScroll() {
-      const componentPosition = this.elementRef.nativeElement.offsetTop
-      const scrollPosition = window.pageYOffset
-
-      if (scrollPosition >= componentPosition) {
-        this.top = 100;
-      } else {
-        this.top = 300;
-      }
-
+        this.tooltipService.updateTooltipPosition();
     }
 }

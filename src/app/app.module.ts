@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { TooltipModule } from './home/tooltip/tooltip.module';
 
 @NgModule({
     declarations: [
@@ -11,9 +12,9 @@ import { AppComponent } from './app.component';
     ],
     imports: [
         BrowserModule,
-        AppRoutingModule
+        AppRoutingModule,
+        TooltipModule
     ],
-    providers: [],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
