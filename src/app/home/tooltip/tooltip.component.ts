@@ -8,6 +8,7 @@ import {
     ChangeDetectionStrategy,
     OnInit,
     OnDestroy,
+    AfterViewInit,
 } from '@angular/core';
 import { TooltipService } from './tooltip.service';
 
@@ -17,23 +18,30 @@ import { TooltipService } from './tooltip.service';
     styleUrls: ['./tooltip.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TooltipComponent implements OnInit, OnDestroy {
+export class TooltipComponent implements OnInit, AfterViewInit, OnDestroy {
     top: number;
     private tooltipPositionChangeSubscription;
 
-    constructor(private elementRef: ElementRef, private tooltipService: TooltipService) {}
+    constructor(
+        private elementRef: ElementRef,
+        private tooltipService: TooltipService
+    ) {}
 
     ngOnInit() {
-        this.top = 200;
         this.tooltipPositionChangeSubscription = this.tooltipService.tooltipPositionChangeObservable.subscribe(() => {
-            const componentPosition = this.elementRef.nativeElement.offsetTop;
-            const scrollPosition = window.pageYOffset;
-            if (componentPosition - scrollPosition > 100) {
-                this.top = 200;
+            if (this.elementRef.nativeElement.getBoundingClientRect().y < 100) {
+                const buttonHeight = this.elementRef.nativeElement.nextSibling.getBoundingClientRect().height;
+                const buttonTop = this.elementRef.nativeElement.nextSibling.offsetTop;
+                this.top = buttonTop + buttonHeight;
             } else {
-                this.top = 336;
+                this.top = this.elementRef.nativeElement.nextSibling.offsetTop - 100;
             }
         });
+    }
+
+    ngAfterViewInit() {
+        const buttonTop = this.elementRef.nativeElement.nextSibling.offsetTop - 100;
+        this.top = buttonTop;
     }
 
     ngOnDestroy() {

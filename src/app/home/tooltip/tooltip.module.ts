@@ -1,11 +1,11 @@
-import { TooltipService } from './tooltip.service';
-import { TooltipComponent } from './tooltip.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TooltipService } from './tooltip.service';
+import { TooltipComponent } from './tooltip.component';
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
     ],
     declarations: [
         TooltipComponent,
