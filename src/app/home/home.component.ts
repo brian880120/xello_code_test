@@ -13,7 +13,11 @@ export class HomeComponent implements OnInit {
     }
 
     onClickOutside(index: number) {
-        this.initState[index].tooltip.isOpen = false
+        this.initState[index].tooltip.isOpen = false;
+    }
+
+    onEscPressed(index: number) {
+        this.initState[index].tooltip.isOpen = false;
     }
 
     toggleTooltip(index: number) {

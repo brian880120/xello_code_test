@@ -3,6 +3,7 @@
         <tooltip [id]="idx"
             [isOpen]="state.tooltip.isOpen"
             (onOutsideClick)="onClickOutside($event)"
+            (onEscPressed)="onEscPressed($event)"
             [content]="state.tooltip.content">
         </tooltip>
         <button type="button"
