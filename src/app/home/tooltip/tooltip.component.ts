@@ -11,6 +11,7 @@ import {
     AfterViewInit,
 } from '@angular/core';
 import { TooltipService } from './tooltip.service';
+import tooltipConstant from './tooltip.constant';
 
 @Component({
     selector: 'tooltip',
@@ -20,6 +21,8 @@ import { TooltipService } from './tooltip.service';
 })
 export class TooltipComponent implements OnInit, AfterViewInit, OnDestroy {
     top: number;
+    height: number = tooltipConstant.DEFAULT_HEIGHT;
+
     private tooltipPositionChangeSubscription;
 
     constructor(
@@ -28,20 +31,13 @@ export class TooltipComponent implements OnInit, AfterViewInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-        this.tooltipPositionChangeSubscription = this.tooltipService.tooltipPositionChangeObservable.subscribe(() => {
-            if (this.elementRef.nativeElement.getBoundingClientRect().y < 100) {
-                const buttonHeight = this.elementRef.nativeElement.nextSibling.getBoundingClientRect().height;
-                const buttonTop = this.elementRef.nativeElement.nextSibling.offsetTop;
-                this.top = buttonTop + buttonHeight;
-            } else {
-                this.top = this.elementRef.nativeElement.nextSibling.offsetTop - 100;
-            }
+        this.tooltipPositionChangeSubscription = this.tooltipService.tooltipPositionChangeObservable.subscribe((top) => {
+            this.top = top;
         });
     }
 
     ngAfterViewInit() {
-        const buttonTop = this.elementRef.nativeElement.nextSibling.offsetTop - 100;
-        this.top = buttonTop;
+        this.top = this.elementRef.nativeElement.nextSibling.offsetTop - tooltipConstant.DEFAULT_HEIGHT;
     }
 
     ngOnDestroy() {
@@ -79,6 +75,6 @@ export class TooltipComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @HostListener('window:scroll', ['$event'])
     checkScroll() {
-        this.tooltipService.updateTooltipPosition();
+        this.tooltipService.updateTooltipPosition(this.elementRef);
     }
 }
