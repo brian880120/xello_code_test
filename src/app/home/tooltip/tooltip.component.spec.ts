@@ -40,18 +40,16 @@ describe('TooltipComponent', () => {
         component['elementRef'] = {
             'nativeElement': {
                 'nextSibling': {
-                    'offsetTop': 10,
+                    'offsetTop': 200,
                     'getBoundingClientRect': () => {
                         return {
                             height: 10,
-                            y: 10,
                         };
                     },
                 },
                 'getBoundingClientRect': () => {
                     return {
-                        height: 10,
-                        y: 10,
+                        y: 110,
                     };
                 },
             }
@@ -68,7 +66,7 @@ describe('TooltipComponent', () => {
         };
 
         expect(tooltipService.updateTooltipPosition).toHaveBeenCalled();
-        expect(component.top).toEqual(-90);
+        expect(component.top).toEqual(100);
     }));
 
     it('should not emit id when button is clicked', () => {

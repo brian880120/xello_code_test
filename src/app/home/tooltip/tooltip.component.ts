@@ -37,6 +37,7 @@ export class TooltipComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngAfterViewInit() {
+        // assign tooltip initial height
         this.top = this.elementRef.nativeElement.nextSibling.offsetTop - tooltipConstant.DEFAULT_HEIGHT;
     }
 
@@ -61,6 +62,7 @@ export class TooltipComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @HostListener('document:keydown.escape')
     onEscKeyDown() {
+        // when esc pressed, emit tooltip index if status is open
         if (this.isOpen) {
             this.onEscPressed.emit(this.id);
         }
@@ -68,6 +70,7 @@ export class TooltipComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @HostListener('document:click', ['$event.target'])
     onClick(target) {
+        // only emit tooltip index if click element is not button and click point is outside tooltip
         if (target.type !== 'button' && !this.elementRef.nativeElement.contains(target)) {
             this.onOutsideClick.emit(this.id);
         }
@@ -75,6 +78,7 @@ export class TooltipComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @HostListener('window:scroll', ['$event'])
     checkScroll() {
+        // trigger tooltip position observable to call next
         this.tooltipService.updateTooltipPosition(this.elementRef);
     }
 }

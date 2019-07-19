@@ -6,22 +6,25 @@ import InitState from './home.constant';
     styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-    initState: any;
+    state: any;
 
     ngOnInit() {
-        this.initState = InitState;
+        this.state = InitState;
     }
 
+    // output handler on outside click
     onClickOutside(index: number) {
-        this.initState[index].tooltip.isOpen = false;
+        this.state[index].tooltip.isOpen = false;
     }
 
+    // output handler on esc pressed
     onEscPressed(index: number) {
-        this.initState[index].tooltip.isOpen = false;
+        this.state[index].tooltip.isOpen = false;
     }
 
+    // event handler on button click
     toggleTooltip(index: number) {
-        this.initState = this.initState.map((item, idx) => {
+        this.state = this.state.map((item, idx) => {
             return {
                 ...item,
                 tooltip: {

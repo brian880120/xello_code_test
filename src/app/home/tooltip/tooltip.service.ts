@@ -13,6 +13,7 @@ export class TooltipService {
     }
 
     updateTooltipPosition(elementRef) {
+        // calculate tooltip top position and emit updated value to subscriber
         const siblingElement = elementRef.nativeElement.nextSibling;
         const siblingTop = siblingElement.offsetTop;
         const siblingHeight = siblingElement.getBoundingClientRect().height;

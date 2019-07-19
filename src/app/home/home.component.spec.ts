@@ -15,7 +15,7 @@ describe('HomeComponent', () => {
         fixture = TestBed.createComponent(HomeComponent);
         component = fixture.componentInstance;
 
-        component.initState = [{
+        component.state = [{
             tooltip: {
                 isOpen: true,
                 content: 'test',
@@ -37,21 +37,21 @@ describe('HomeComponent', () => {
     });
 
     it('should close tooltip onClickOutside', () => {
-        expect(component.initState[0].tooltip.isOpen).toEqual(true);
+        expect(component.state[0].tooltip.isOpen).toEqual(true);
         component.onClickOutside(0);
-        expect(component.initState[0].tooltip.isOpen).toEqual(false);
+        expect(component.state[0].tooltip.isOpen).toEqual(false);
     });
 
     it('should close tooltip onEscPressed', () => {
-        expect(component.initState[0].tooltip.isOpen).toEqual(true);
+        expect(component.state[0].tooltip.isOpen).toEqual(true);
         component.onEscPressed(0);
-        expect(component.initState[0].tooltip.isOpen).toEqual(false);
+        expect(component.state[0].tooltip.isOpen).toEqual(false);
     });
 
     it('should toggle tooltip on button clicked', () => {
-        expect(component.initState[0].tooltip.isOpen).toEqual(true);
+        expect(component.state[0].tooltip.isOpen).toEqual(true);
         component.toggleTooltip(1);
-        expect(component.initState[0].tooltip.isOpen).toEqual(false);
-        expect(component.initState[1].tooltip.isOpen).toEqual(true);
+        expect(component.state[0].tooltip.isOpen).toEqual(false);
+        expect(component.state[1].tooltip.isOpen).toEqual(true);
     });
 });

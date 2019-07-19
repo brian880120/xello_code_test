@@ -14,7 +14,7 @@ describe('TooltipService', () => {
     });
 
     describe('updateTooltipPosition', () => {
-        it('it should call if', () => {
+        it('it should open tooltip below if top less than default height', () => {
             const testArgument = {
                 'nativeElement': {
                     'nextSibling': {
@@ -22,46 +22,42 @@ describe('TooltipService', () => {
                         'getBoundingClientRect': () => {
                             return {
                                 height: 10,
-                                y: 10,
                             };
                         },
                     },
                     'getBoundingClientRect': () => {
                         return {
-                            height: 10,
-                            y: 10,
+                            y: 90,
                         };
                     },
                 }
             };
-            service.tooltipPositionChangeObservable.subscribe(data => {
-                expect(data).toEqual(20);
+            service.tooltipPositionChangeObservable.subscribe(top => {
+                expect(top).toEqual(20);
             });
             service.updateTooltipPosition(testArgument);
         });
 
-        it('it should call else', () => {
+        it('it should open tooltip above if top larger than default height', () => {
             const testArgument = {
                 'nativeElement': {
                     'nextSibling': {
-                        'offsetTop': 10,
+                        'offsetTop': 200,
                         'getBoundingClientRect': () => {
                             return {
                                 height: 10,
-                                y: 10,
                             };
                         },
                     },
                     'getBoundingClientRect': () => {
                         return {
-                            height: 10,
-                            y: 10,
+                            y: 110,
                         };
                     },
                 }
             };
-            service.tooltipPositionChangeObservable.subscribe(data => {
-                expect(data).toEqual(20);
+            service.tooltipPositionChangeObservable.subscribe(top => {
+                expect(top).toEqual(100);
             });
             service.updateTooltipPosition(testArgument);
         });

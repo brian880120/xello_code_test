@@ -1,15 +1,15 @@
 <div class="home-wrapper">
-    <div *ngFor="let state of initState; index as idx">
+    <div *ngFor="let item of state; index as idx">
         <tooltip [id]="idx"
-            [isOpen]="state.tooltip.isOpen"
+            [isOpen]="item.tooltip.isOpen"
             (onOutsideClick)="onClickOutside($event)"
             (onEscPressed)="onEscPressed($event)"
-            [content]="state.tooltip.content">
+            [content]="item.tooltip.content">
         </tooltip>
         <button type="button"
             (click)="toggleTooltip(idx)"
-            class="{{state.button.class}}">
-            {{ state.button.name }}
+            class="{{item.button.class}}">
+            {{ item.button.name }}
         </button>
     </div>
 </div>
