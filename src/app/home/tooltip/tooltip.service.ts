@@ -4,11 +4,11 @@ import tooltipConstant from './tooltip.constant';
 
 @Injectable()
 export class TooltipService {
-    private tooltipPositionChangeStream: Subject<any>;
-    public tooltipPositionChangeObservable: Observable<any>;
+    private tooltipPositionChangeStream: Subject<number>;
+    public tooltipPositionChangeObservable: Observable<number>;
 
     constructor() {
-        this.tooltipPositionChangeStream = new Subject<any>();
+        this.tooltipPositionChangeStream = new Subject<number>();
         this.tooltipPositionChangeObservable = this.tooltipPositionChangeStream.asObservable();
     }
 
